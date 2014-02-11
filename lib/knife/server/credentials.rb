@@ -28,6 +28,7 @@ module Knife
       end
 
       def install_validation_key(suffix = Time.now.to_i)
+        pp "The current validation key path is #{@validation_key_path}"
         if File.exists?(@validation_key_path)
           FileUtils.cp(@validation_key_path,
                        backup_file_path(@validation_key_path, suffix))
@@ -70,7 +71,7 @@ module Knife
 
       def install_client_key(user, client_key_path, suffix = Time.now.to_i)
         create_user_client(user)
-        pp "The current key path is #{client_key_path}"
+        pp "The current client key path is #{client_key_path}"
         if File.exists?(client_key_path)
           FileUtils.cp(client_key_path,
                        backup_file_path(client_key_path, suffix))
