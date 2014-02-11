@@ -32,6 +32,8 @@ module Knife
         if File.exists?(@validation_key_path)
           FileUtils.cp(@validation_key_path,
                        backup_file_path(@validation_key_path, suffix))
+        else
+          FileUtils.touch(@validation_key_path)
         end
 
         chef10_key = "/etc/chef/validation.pem"
@@ -71,7 +73,7 @@ module Knife
 
       def install_client_key(user, client_key_path, suffix = Time.now.to_i)
         create_user_client(user)
-        pp "The current client key path is #{client_key_path}"
+        pp "The current client key path is #{client_key_path} and the user is #{user}"
         if File.exists?(client_key_path)
           FileUtils.cp(client_key_path,
                        backup_file_path(client_key_path, suffix))
@@ -96,6 +98,7 @@ module Knife
       end
 
       def create_user_client(user)
+        pp "creating a client with the user #{user}"
         chef10_cmd = [
           "knife client create",
           user,
